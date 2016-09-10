@@ -1,9 +1,11 @@
 
 
-# go-twitter [![Build Status](https://travis-ci.org/dghubble/go-twitter.png)](https://travis-ci.org/dghubble/go-twitter) [![GoDoc](https://godoc.org/github.com/dghubble/go-twitter?status.png)](https://godoc.org/github.com/dghubble/go-twitter)
-<img align="right" src="https://storage.googleapis.com/dghubble/gopher-on-bird.png">
+# go-twitter [![Build Status](https://api.travis-ci.org/TheJokersThief/go-twitter.png)](https://travis-ci.org/TheJokersThief/go-twitter) [![GoDoc](https://godoc.org/github.com/TheJokersThief/go-twitter?status.png)](https://godoc.org/github.com/TheJokersThief/go-twitter)
 
 go-twitter is a Go client library for the [Twitter API](https://dev.twitter.com/rest/public). Check the [usage](#usage) section or try the [examples](/examples) to see how to access the Twitter API.
+
+### Original Work
+This repo is based on the work from [dghubble's original repo](https://github.com/TheJokersThief/go-twitter) with updated functionality
 
 ### Features
 
@@ -15,6 +17,9 @@ go-twitter is a Go client library for the [Twitter API](https://dev.twitter.com/
     * Statuses
     * Timelines
     * Users
+    * Friends
+    * Friendships (Following/Not Following)
+    * Search
 * Twitter Streaming API
     * Public Streams
     * User Streams
@@ -23,11 +28,11 @@ go-twitter is a Go client library for the [Twitter API](https://dev.twitter.com/
 
 ## Install
 
-    go get github.com/dghubble/go-twitter/twitter
+    go get github.com/TheJokersThief/go-twitter/twitter
 
 ## Documentation
 
-Read [GoDoc](https://godoc.org/github.com/dghubble/go-twitter/twitter)
+Read [GoDoc](https://godoc.org/github.com/TheJokersThief/go-twitter/twitter)
 
 ## Usage
 
@@ -212,7 +217,7 @@ For example, make requests as a consumer application on behalf of a user who has
 ```go
 // OAuth1
 import (
-    "github.com/dghubble/go-twitter/twitter"
+    "github.com/TheJokersThief/go-twitter/twitter"
     "github.com/dghubble/oauth1"
 )
 
@@ -230,7 +235,7 @@ If no user auth context is needed, make requests as your application with applic
 ```go
 // OAuth2
 import (
-    "github.com/dghubble/go-twitter/twitter"
+    "github.com/TheJokersThief/go-twitter/twitter"
     "golang.org/x/oauth2"
 )
 
@@ -244,15 +249,6 @@ client := twitter.NewClient(httpClient)
 ```
 
 To implement Login with Twitter for web or mobile, see the gologin [package](https://github.com/dghubble/gologin) and [examples](https://github.com/dghubble/gologin/tree/master/examples/twitter).
-
-## Roadmap
-
-* Support gzipped streams
-* Auto-stop streams in the event of long stalls
-
-## Contributing
-
-See the [Contributing Guide](https://gist.github.com/dghubble/be682c123727f70bcfe7).
 
 ## License
 
