@@ -85,7 +85,8 @@ type FriendshipShowParams struct {
 	TargetID         string `url:"target_id,omitempty"`
 }
 
-// Show returns the relationship between any two specified users
+// Show Returns detailed information about the relationship between two
+// arbitrary users.
 func (s *FriendshipService) Show(params *FriendshipShowParams) (*FriendshipShowResult, *http.Response, error) {
 	friendships := new(FriendshipShowResult)
 	apiError := new(APIError)
@@ -93,7 +94,8 @@ func (s *FriendshipService) Show(params *FriendshipShowParams) (*FriendshipShowR
 	return friendships, resp, relevantError(err, *apiError)
 }
 
-// Destroy unfollows a user
+// Destroy allows the authenticating user to unfollow the user specified in
+// the ID/ScreenName parameter.
 func (s *FriendshipService) Destroy(params *FriendshipLookupParams) (*User, *http.Response, error) {
 	friendships := new(User)
 
@@ -102,7 +104,8 @@ func (s *FriendshipService) Destroy(params *FriendshipLookupParams) (*User, *htt
 	return friendships, resp, relevantError(err, *apiError)
 }
 
-// Create follows a user
+// Create allows the authenticating users to follow the user specified in
+// the ID/ScreenName parameter.
 func (s *FriendshipService) Create(params *FriendshipLookupParams) (*User, *http.Response, error) {
 	friendships := new(User)
 
