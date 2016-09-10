@@ -130,3 +130,49 @@ func TestFriendshipDestroy(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, expected, user)
 }
+
+func TestFriendshipUpdate(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/1.1/friendships/update.json", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "POST", r)
+		assertQuery(t, map[string]string{"screen_name": "thejokersthief", "retweets": "true"}, r)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"relationship":{"source":{"id":54655541,"id_str":"54655541","screen_name":"TheJokersThief","following":false,"followed_by":false,"live_following":false,"following_received":false,"following_requested":false,"notifications_enabled":false,"can_dm":false,"blocking":false,"blocked_by":false,"muting":false,"want_retweets":true,"all_replies":false,"marked_spam":false},"target":{"id":623265148,"id_str":"623265148","screen_name":"dghubble","following":false,"followed_by":false,"following_received":false,"following_requested":false}}}`)
+	})
+	expected := &FriendshipShowResult{
+		Relationship: FriendshipRelationship{
+			Target: FriendshipRelationshipTarget{
+				IDStr:      "623265148",
+				ID:         623265148,
+				ScreenName: "dghubble",
+				Following:  false,
+				FollowedBy: false,
+			},
+			Source: FriendshipRelationshipSource{
+				CanDM:                false,
+				Blocking:             false,
+				Muting:               false,
+				IDStr:                "54655541",
+				AllReplies:           false,
+				WantRetweets:         true,
+				ID:                   54655541,
+				MarkedSpam:           false,
+				ScreenName:           "TheJokersThief",
+				Following:            false,
+				FollowedBy:           false,
+				NotificationsEnabled: false,
+			},
+		},
+	}
+
+	client := NewClient(httpClient)
+	params := &FriendshipUpdateParams{
+		ScreenName: "thejokersthief",
+		Retweets:   true,
+	}
+	friendshipStatus, _, err := client.Friendships.Update(params)
+	assert.Nil(t, err)
+	assert.Equal(t, expected, friendshipStatus)
+}

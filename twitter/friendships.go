@@ -113,3 +113,20 @@ func (s *FriendshipService) Create(params *FriendshipLookupParams) (*User, *http
 	resp, err := s.sling.New().Post("create.json").QueryStruct(params).Receive(friendships, apiError)
 	return friendships, resp, relevantError(err, *apiError)
 }
+
+// FriendshipUpdateParams are the parameters given to the Update function
+type FriendshipUpdateParams struct {
+	ScreenName string `url:"screen_name,omitempty"` // The screen name of the user for whom to befriend.
+	SourceID   string `url:"user_id,omitempty"`     // The ID of the user for whom to befriend.
+	Device     bool   `url:"device,omitempty"`      // Enable/disable device notifications from the target user.
+	Retweets   bool   `url:"retweets,omitempty"`    // Enable/disable retweets from the target user.
+}
+
+// Update allows one to enable or disable retweets and device notifications
+// from the specified user.
+func (s *FriendshipService) Update(params *FriendshipUpdateParams) (*FriendshipShowResult, *http.Response, error) {
+	friendship := new(FriendshipShowResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Post("update.json").QueryStruct(params).Receive(friendship, apiError)
+	return friendship, resp, relevantError(err, *apiError)
+}
