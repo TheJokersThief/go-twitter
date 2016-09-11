@@ -35,7 +35,7 @@ has granted access, with OAuth1.
 
 	// OAuth1
 	import (
-		"github.com/dghubble/go-twitter/twitter"
+		"github.com/thejokersthief/go-twitter/twitter"
 		"github.com/dghubble/oauth1"
 	)
 
@@ -52,7 +52,7 @@ application auth.
 
 	// OAuth2
 	import (
-		"github.com/dghubble/go-twitter/twitter"
+		"github.com/thejokersthief/go-twitter/twitter"
 		"golang.org/x/oauth2"
 	)
 
