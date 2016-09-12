@@ -1,5 +1,3 @@
-
-
 # go-twitter [![Build Status](https://api.travis-ci.org/TheJokersThief/go-twitter.png)](https://travis-ci.org/TheJokersThief/go-twitter) [![GoDoc](https://godoc.org/github.com/TheJokersThief/go-twitter?status.png)](https://godoc.org/github.com/TheJokersThief/go-twitter)
 
 go-twitter is a Go client library for the [Twitter API](https://dev.twitter.com/rest/public). Check the [usage](#usage) section or try the [examples](/examples) to see how to access the Twitter API.
@@ -11,20 +9,22 @@ This repo is based on the work from [dghubble's original repo](https://github.co
 
 * Twitter REST API:
     * Accounts
-    * Direct Messages
+    * Direct Messages\*
     * Favorites
     * Followers
-    * Statuses
+    * Statuses\*
     * Timelines
     * Users
-    * Friends
-    * Friendships (Following/Not Following)
-    * Search
+    * Friends\*
+    * Friendships (Following/Not Following)\*
+    * Search\*
 * Twitter Streaming API
     * Public Streams
     * User Streams
     * Site Streams
     * Firehose Streams
+
+**\* API-Complete**
 
 ## Install
 
