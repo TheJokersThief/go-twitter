@@ -251,6 +251,32 @@ func (s *StatusService) RetweetsOfMe(params *StatusRetweetsOfMeParams) ([]Tweet,
 	return *tweets, resp, relevantError(err, *apiError)
 }
 
+// StatusRetweetersResult is the result from StatusService.Retweeters
+type StatusRetweetersResult struct {
+	PreviousCursor    int64   `json:"previous_cursor"`
+	PreviousCursorStr string  `json:"previous_cursor_str"`
+	NextCursor        int64   `json:"next_cursor"`
+	NextCursorStr     string  `json:"next_cursor_str"`
+	IDs               []int64 `json:"ids"`
+}
+
+// StatusRetweetersParams are the parameters for StatusService.Retweeters
+type StatusRetweetersParams struct {
+	ID           int64 `url:"id"`
+	Cursor       int64 `url:"cursor,omitempty"`
+	StringifyIDs bool  `url:"stringify_ids,omitempty"`
+}
+
+// Retweeters returns a collection of up to 100 user IDs belonging to users
+// who have retweeted the tweet specified by the id parameter
+// https://dev.twitter.com/rest/reference/get/statuses/retweeters/ids
+func (s *StatusService) Retweeters(params *StatusRetweetersParams) (StatusRetweetersResult, *http.Response, error) {
+	tweets := new(StatusRetweetersResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Get("retweeters/ids.json").QueryStruct(params).Receive(tweets, apiError)
+	return *tweets, resp, relevantError(err, *apiError)
+}
+
 // StatusDestroyParams are the parameters for StatusService.Destroy
 type StatusDestroyParams struct {
 	ID       int64 `url:"id,omitempty"`
