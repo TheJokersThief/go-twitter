@@ -176,3 +176,28 @@ func TestFriendshipUpdate(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, expected, friendshipStatus)
 }
+
+func TestFriendshipIncoming(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/1.1/friendships/incoming.json", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "GET", r)
+		assertQuery(t, map[string]string{"cursor": "-1"}, r)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"previous_cursor":0,"ids": [1, 2, 3], "next_cursor": 123}`)
+	})
+	expected := &FriendshipIncomingResult{
+		PreviousCursor: 0,
+		IDs:            []int64{1, 2, 3},
+		NextCursor:     123,
+	}
+
+	client := NewClient(httpClient)
+	params := &FriendshipIncomingParams{
+		Cursor: -1,
+	}
+	user, _, err := client.Friendships.Incoming(params)
+	assert.Nil(t, err)
+	assert.Equal(t, expected, user)
+}

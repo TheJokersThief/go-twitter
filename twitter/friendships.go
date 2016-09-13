@@ -94,6 +94,42 @@ func (s *FriendshipService) Show(params *FriendshipShowParams) (*FriendshipShowR
 	return friendships, resp, relevantError(err, *apiError)
 }
 
+// FriendshipIncomingParams are the parameters given to
+// FriendshipService.Incoming
+type FriendshipIncomingParams struct {
+	Cursor       int64 `url:"cursor,omitempty"`
+	StringifyIDs bool  `url:"stringify_ids,omitempty"`
+}
+
+// FriendshipIncomingResult is the result from FriendshipService.Incoming
+type FriendshipIncomingResult struct {
+	NextCursor        int64   `json:"next_cursor"`
+	NextCursorStr     string  `json:"next_cursor_str"`
+	PreviousCursor    int64   `json:"previous_cursor"`
+	PreviousCursorStr string  `json:"previous_cursor_str"`
+	IDs               []int64 `json:"ids"`
+}
+
+// Incoming returns a collection of numeric IDs for every user who has a
+// pending request to follow the authenticating user.
+// https://dev.twitter.com/rest/reference/get/friendships/incoming
+func (s *FriendshipService) Incoming(params *FriendshipIncomingParams) (*FriendshipIncomingResult, *http.Response, error) {
+	result := new(FriendshipIncomingResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Get("incoming.json").QueryStruct(params).Receive(result, apiError)
+	return result, resp, relevantError(err, *apiError)
+}
+
+// Outgoing returns a collection of numeric IDs for every protected user for
+// whom the authenticating user has a pending follow request.
+// https://dev.twitter.com/rest/reference/get/friendships/outgoing
+func (s *FriendshipService) Outgoing(params *FriendshipIncomingParams) (*FriendshipIncomingResult, *http.Response, error) {
+	result := new(FriendshipIncomingResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Get("outgoing.json").QueryStruct(params).Receive(result, apiError)
+	return result, resp, relevantError(err, *apiError)
+}
+
 // Destroy allows the authenticating user to unfollow the user specified in
 // the ID/ScreenName parameter.
 func (s *FriendshipService) Destroy(params *FriendshipLookupParams) (*User, *http.Response, error) {
