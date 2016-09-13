@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFriendshipLookup(t *testing.T) {
+func TestFriendship_Lookup(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
@@ -37,7 +37,7 @@ func TestFriendshipLookup(t *testing.T) {
 	assert.Equal(t, expected, friendshipStatus)
 }
 
-func TestFriendshipShow(t *testing.T) {
+func TestFriendship_Show(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
@@ -83,7 +83,7 @@ func TestFriendshipShow(t *testing.T) {
 	assert.Equal(t, expected, friendshipStatus)
 }
 
-func TestFriendshipCreate(t *testing.T) {
+func TestFriendship_Create(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
@@ -107,7 +107,7 @@ func TestFriendshipCreate(t *testing.T) {
 	assert.Equal(t, expected, user)
 }
 
-func TestFriendshipDestroy(t *testing.T) {
+func TestFriendship_Destroy(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
@@ -131,7 +131,7 @@ func TestFriendshipDestroy(t *testing.T) {
 	assert.Equal(t, expected, user)
 }
 
-func TestFriendshipUpdate(t *testing.T) {
+func TestFriendship_Update(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
@@ -177,7 +177,7 @@ func TestFriendshipUpdate(t *testing.T) {
 	assert.Equal(t, expected, friendshipStatus)
 }
 
-func TestFriendshipIncoming(t *testing.T) {
+func TestFriendship_Incoming(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
@@ -202,7 +202,7 @@ func TestFriendshipIncoming(t *testing.T) {
 	assert.Equal(t, expected, user)
 }
 
-func TestFriendshipNoRetweets(t *testing.T) {
+func TestFriendship_NoRetweets(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
