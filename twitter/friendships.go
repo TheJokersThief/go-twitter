@@ -130,6 +130,16 @@ func (s *FriendshipService) Outgoing(params *FriendshipIncomingParams) (*Friends
 	return result, resp, relevantError(err, *apiError)
 }
 
+// NoRetweets reeturns a collection of user_ids that the currently
+// authenticated user does not want to receive retweets from.
+// https://dev.twitter.com/rest/reference/get/friendships/no_retweets/ids
+func (s *FriendshipService) NoRetweets() (*[]int64, *http.Response, error) {
+	result := new([]int64)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Get("no_retweets/ids.json").Receive(result, apiError)
+	return result, resp, relevantError(err, *apiError)
+}
+
 // Destroy allows the authenticating user to unfollow the user specified in
 // the ID/ScreenName parameter.
 func (s *FriendshipService) Destroy(params *FriendshipLookupParams) (*User, *http.Response, error) {
