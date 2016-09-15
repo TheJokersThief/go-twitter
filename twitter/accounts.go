@@ -171,3 +171,50 @@ func (s *AccountService) UpdateProfile(params *AccountSettingsUpdateProfileParam
 	resp, err := s.sling.New().Post("update_profile.json").QueryStruct(params).Receive(settings, apiError)
 	return settings, resp, relevantError(err, *apiError)
 }
+
+// AccountSettingsUpdateProfileImageParams are the parameters for
+// AccountService.UpdateProfileImage
+type AccountSettingsUpdateProfileImageParams struct {
+	Image           string `url:"image,omitempty"` // base64-encoded image data
+	IncludeEntities bool   `url:"include_entities,omitempty"`
+	SkipStatus      bool   `url:"skip_status,omitempty"`
+}
+
+// UpdateProfileImage updates the authenticating user’s profile image. Note
+// that this method expects raw multipart data, not a URL to an image.
+func (s *AccountService) UpdateProfileImage(params *AccountSettingsUpdateProfileImageParams) (*AccountSettingsUpdateProfileResult, *http.Response, error) {
+	settings := new(AccountSettingsUpdateProfileResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Post("update_profile_image.json").QueryStruct(params).Receive(settings, apiError)
+	return settings, resp, relevantError(err, *apiError)
+}
+
+// AccountSettingsUpdateProfileBannerParams are the parameters for
+// AccountService.UpdateProfileBanner
+type AccountSettingsUpdateProfileBannerParams struct {
+	Banner     string `url:"banner,omitempty"` // base64-encoded image data
+	Width      int64  `url:"width"`
+	Height     int64  `url:"height"`
+	OffsetLeft int64  `url:"offset_left"`
+	OffsetTop  int64  `url:"offset_top"`
+}
+
+// UpdateProfileBanner uploads a profile banner on behalf of the
+// authenticating user.
+// https://dev.twitter.com/rest/reference/post/account/update_profile_banner
+func (s *AccountService) UpdateProfileBanner(params *AccountSettingsUpdateProfileBannerParams) (*AccountSettingsUpdateProfileResult, *http.Response, error) {
+	settings := new(AccountSettingsUpdateProfileResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Post("update_profile_banner.json").QueryStruct(params).Receive(settings, apiError)
+	return settings, resp, relevantError(err, *apiError)
+}
+
+// RemoveProfileBanner removes the uploaded profile banner for the
+// authenticating user. Returns HTTP 200 upon success.
+// https://dev.twitter.com/rest/reference/post/account/remove_profile_banner
+func (s *AccountService) RemoveProfileBanner() (*AccountSettingsUpdateProfileResult, *http.Response, error) {
+	settings := new(AccountSettingsUpdateProfileResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Post("remove_profile_banner.json").Receive(settings, apiError)
+	return settings, resp, relevantError(err, *apiError)
+}
