@@ -8,7 +8,7 @@ This repo is based on the work from [dghubble's original repo](https://github.co
 ### Features
 
 * Twitter REST API:
-    * Accounts
+    * Accounts\*
     * Direct Messages\*
     * Favorites
     * Followers
