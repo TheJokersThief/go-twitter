@@ -38,53 +38,53 @@ func (s *AccountService) VerifyCredentials(params *AccountVerifyParams) (*User, 
 
 // AccountSettingsResult is the result from AccountService.Settings
 type AccountSettingsResult struct {
-	AlwaysUseHTTPS           bool                                 `json:"always_use_https"`
-	DiscoverableByEmail      bool                                 `json:"discoverable_by_email"`
-	GeoEnabled               bool                                 `json:"geo_enabled"`
-	Language                 string                               `json:"language"`
-	Protected                bool                                 `json:"protected"`
-	ScreenName               string                               `json:"screen_name"`
-	ShowAllInlineMedia       bool                                 `json:"show_all_inline_media"`
-	UseCookiePersonalization bool                                 `json:"use_cookie_personalization"`
-	AllowContributorRequest  string                               `json:"allow_contributor_request"`
-	SleepTime                AccountSettingsResultSleepTime       `json:"sleep_time"`
-	TimeZone                 AccountSettingsResultTimeZone        `json:"time_zone"`
-	TrendLocation            []AccountSettingsResultTrendLocation `json:"trend_location"`
+	AlwaysUseHTTPS           bool                                 `json:"always_use_https" url:"always_use_https,omitempty"`
+	DiscoverableByEmail      bool                                 `json:"discoverable_by_email" url:"discoverable_by_email,omitempty"`
+	GeoEnabled               bool                                 `json:"geo_enabled" url:"geo_enabled,omitempty"`
+	Language                 string                               `json:"language" url:"language,omitempty"`
+	Protected                bool                                 `json:"protected" url:"protected,omitempty"`
+	ScreenName               string                               `json:"screen_name" url:"screen_name,omitempty"`
+	ShowAllInlineMedia       bool                                 `json:"show_all_inline_media" url:"show_all_inline_media,omitempty"`
+	UseCookiePersonalization bool                                 `json:"use_cookie_personalization" url:"use_cookie_personalization,omitempty"`
+	AllowContributorRequest  string                               `json:"allow_contributor_request" url:"allow_contributor_request,omitempty"`
+	SleepTime                AccountSettingsResultSleepTime       `json:"sleep_time" url:"sleep_time,omitempty"`
+	TimeZone                 AccountSettingsResultTimeZone        `json:"time_zone" url:"time_zone,omitempty"`
+	TrendLocation            []AccountSettingsResultTrendLocation `json:"trend_location" url:"trend_location,omitempty"`
 }
 
 // AccountSettingsResultSleepTime is part of the result from
 // AccountService.Settings
 type AccountSettingsResultSleepTime struct {
-	Enabled   bool   `json:"enabled"`
-	EndTime   string `json:"end_time"`
-	StartTime string `json:"start_time"`
+	Enabled   bool   `json:"enabled" url:"enabled"`
+	EndTime   string `json:"end_time" url:"end_time"`
+	StartTime string `json:"start_time" url:"start_time"`
 }
 
 // AccountSettingsResultTimeZone is part of the result from
 // AccountService.Settings
 type AccountSettingsResultTimeZone struct {
-	Name       string `json:"name"`
-	TzinfoName string `json:"tzinfo_name"`
-	UtcOffset  int64  `json:"utc_offset"`
+	Name       string `json:"name" url:"name"`
+	TzinfoName string `json:"tzinfo_name" url:"tzinfo_name"`
+	UtcOffset  int64  `json:"utc_offset" url:"utc_offset"`
 }
 
 // AccountSettingsResultTrendLocation is part of the result from
 // AccountService.Settings
 type AccountSettingsResultTrendLocation struct {
-	Country     string                         `json:"country"`
-	CountryCode string                         `json:"countryCode"`
-	Name        string                         `json:"name"`
-	ParentID    int64                          `json:"parentid"`
-	URL         string                         `json:"url"`
-	WoeID       int64                          `json:"woeid"`
-	PlaceType   AccountSettingsResultPlaceType `json:"placeType"`
+	Country     string                         `json:"country" url:"country"`
+	CountryCode string                         `json:"countryCode" url:"countryCode"`
+	Name        string                         `json:"name" url:"name"`
+	ParentID    int64                          `json:"parentid" url:"parentid"`
+	URL         string                         `json:"url" url:"url"`
+	WoeID       int64                          `json:"woeid" url:"woeid"`
+	PlaceType   AccountSettingsResultPlaceType `json:"placeType" url:"placeType"`
 }
 
 // AccountSettingsResultPlaceType is part of the result from
 // AccountService.Settings
 type AccountSettingsResultPlaceType struct {
-	Code int64  `json:"code"`
-	Name string `json:"name"`
+	Code int64  `json:"code" url:"code"`
+	Name string `json:"name" url:"name"`
 }
 
 // Settings returns settings (including current trend, geo and sleep time
@@ -94,5 +94,15 @@ func (s *AccountService) Settings() (*AccountSettingsResult, *http.Response, err
 	settings := new(AccountSettingsResult)
 	apiError := new(APIError)
 	resp, err := s.sling.New().Get("settings.json").Receive(settings, apiError)
+	return settings, resp, relevantError(err, *apiError)
+}
+
+// UpdateSettings returns settings (including current trend, geo and sleep time
+// information) for the authenticating user.
+// https://dev.twitter.com/rest/reference/get/account/settings
+func (s *AccountService) UpdateSettings(params *AccountSettingsResult) (*AccountSettingsResult, *http.Response, error) {
+	settings := new(AccountSettingsResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Post("settings.json").QueryStruct(params).Receive(settings, apiError)
 	return settings, resp, relevantError(err, *apiError)
 }
