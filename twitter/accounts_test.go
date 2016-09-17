@@ -153,7 +153,7 @@ func TestAccountService_UpdateProfile(t *testing.T) {
 	}
 
 	settings, _, err := client.Accounts.UpdateProfile(params)
-	expected := &AccountSettingsUpdateProfileResult{
+	expected := &User{
 		CreatedAt:       "Thu Aug 23 19:45:07 +0000 2012",
 		Description:     "Keep calm and rock on.",
 		FavouritesCount: 0,
@@ -168,16 +168,16 @@ func TestAccountService_UpdateProfile(t *testing.T) {
 		Name:            "Sean Cook",
 		ProfileBackgroundColor:         "9AE4E8",
 		ProfileBackgroundImageURL:      "http://a0.twimg.com/images/themes/theme16/bg.gif",
-		ProfileBackgroundImageURLHTTPS: "https://si0.twimg.com/images/themes/theme16/bg.gif",
+		ProfileBackgroundImageURLHttps: "https://si0.twimg.com/images/themes/theme16/bg.gif",
 		ProfileImageURL:                "http://a0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
-		ProfileImageURLHTTPS:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+		ProfileImageURLHttps:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
 		ProfileLinkColor:               "0084B4",
 		ProfileSidebarBorderColor:      "BDDCAD",
 		ProfileSidebarFillColor:        "DDFFCC",
 		ProfileTextColor:               "333333",
 		ScreenName:                     "s0c1alm3dia",
 		StatusesCount:                  0,
-		TimeZone:                       "Pacific Time (US & Canada)",
+		Timezone:                       "Pacific Time (US & Canada)",
 		URL:                            "http://cnn.com",
 		UtcOffset:                      -28800,
 		ProfileUseBackgroundImage:      true,
@@ -217,7 +217,7 @@ func TestAccountService_UpdateProfileImage(t *testing.T) {
 	}
 
 	settings, _, err := client.Accounts.UpdateProfileImage(params)
-	expected := &AccountSettingsUpdateProfileResult{
+	expected := &User{
 		CreatedAt:       "Thu Aug 23 19:45:07 +0000 2012",
 		Description:     "Keep calm and rock on.",
 		FavouritesCount: 0,
@@ -232,16 +232,16 @@ func TestAccountService_UpdateProfileImage(t *testing.T) {
 		Name:            "Sean Cook",
 		ProfileBackgroundColor:         "9AE4E8",
 		ProfileBackgroundImageURL:      "http://a0.twimg.com/images/themes/theme16/bg.gif",
-		ProfileBackgroundImageURLHTTPS: "https://si0.twimg.com/images/themes/theme16/bg.gif",
+		ProfileBackgroundImageURLHttps: "https://si0.twimg.com/images/themes/theme16/bg.gif",
 		ProfileImageURL:                "http://a0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
-		ProfileImageURLHTTPS:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+		ProfileImageURLHttps:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
 		ProfileLinkColor:               "0084B4",
 		ProfileSidebarBorderColor:      "BDDCAD",
 		ProfileSidebarFillColor:        "DDFFCC",
 		ProfileTextColor:               "333333",
 		ScreenName:                     "s0c1alm3dia",
 		StatusesCount:                  0,
-		TimeZone:                       "Pacific Time (US & Canada)",
+		Timezone:                       "Pacific Time (US & Canada)",
 		URL:                            "http://cnn.com",
 		UtcOffset:                      -28800,
 		ProfileUseBackgroundImage:      true,
@@ -283,7 +283,7 @@ func TestAccountService_UpdateProfileBanner(t *testing.T) {
 	}
 
 	settings, _, err := client.Accounts.UpdateProfileBanner(params)
-	expected := &AccountSettingsUpdateProfileResult{
+	expected := &User{
 		CreatedAt:       "Thu Aug 23 19:45:07 +0000 2012",
 		Description:     "Keep calm and rock on.",
 		FavouritesCount: 0,
@@ -298,16 +298,16 @@ func TestAccountService_UpdateProfileBanner(t *testing.T) {
 		Name:            "Sean Cook",
 		ProfileBackgroundColor:         "9AE4E8",
 		ProfileBackgroundImageURL:      "http://a0.twimg.com/images/themes/theme16/bg.gif",
-		ProfileBackgroundImageURLHTTPS: "https://si0.twimg.com/images/themes/theme16/bg.gif",
+		ProfileBackgroundImageURLHttps: "https://si0.twimg.com/images/themes/theme16/bg.gif",
 		ProfileImageURL:                "http://a0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
-		ProfileImageURLHTTPS:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+		ProfileImageURLHttps:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
 		ProfileLinkColor:               "0084B4",
 		ProfileSidebarBorderColor:      "BDDCAD",
 		ProfileSidebarFillColor:        "DDFFCC",
 		ProfileTextColor:               "333333",
 		ScreenName:                     "s0c1alm3dia",
 		StatusesCount:                  0,
-		TimeZone:                       "Pacific Time (US & Canada)",
+		Timezone:                       "Pacific Time (US & Canada)",
 		URL:                            "http://cnn.com",
 		UtcOffset:                      -28800,
 		ProfileUseBackgroundImage:      true,
@@ -340,7 +340,7 @@ func TestAccountService_RemoveProfileBanner(t *testing.T) {
 	client := NewClient(httpClient)
 
 	settings, _, err := client.Accounts.RemoveProfileBanner()
-	expected := &AccountSettingsUpdateProfileResult{
+	expected := &User{
 		CreatedAt:       "Thu Aug 23 19:45:07 +0000 2012",
 		Description:     "Keep calm and rock on.",
 		FavouritesCount: 0,
@@ -355,16 +355,16 @@ func TestAccountService_RemoveProfileBanner(t *testing.T) {
 		Name:            "Sean Cook",
 		ProfileBackgroundColor:         "9AE4E8",
 		ProfileBackgroundImageURL:      "http://a0.twimg.com/images/themes/theme16/bg.gif",
-		ProfileBackgroundImageURLHTTPS: "https://si0.twimg.com/images/themes/theme16/bg.gif",
+		ProfileBackgroundImageURLHttps: "https://si0.twimg.com/images/themes/theme16/bg.gif",
 		ProfileImageURL:                "http://a0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
-		ProfileImageURLHTTPS:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+		ProfileImageURLHttps:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
 		ProfileLinkColor:               "0084B4",
 		ProfileSidebarBorderColor:      "BDDCAD",
 		ProfileSidebarFillColor:        "DDFFCC",
 		ProfileTextColor:               "333333",
 		ScreenName:                     "s0c1alm3dia",
 		StatusesCount:                  0,
-		TimeZone:                       "Pacific Time (US & Canada)",
+		Timezone:                       "Pacific Time (US & Canada)",
 		URL:                            "http://cnn.com",
 		UtcOffset:                      -28800,
 		ProfileUseBackgroundImage:      true,
