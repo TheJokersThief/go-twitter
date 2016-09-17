@@ -166,3 +166,64 @@ func TestBlockService_Create(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, expected, result)
 }
+
+func TestBlockService_Destroy(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/1.1/blocks/destroy.json", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "POST", r)
+		assertQuery(t, map[string]string{"screen_name": "s0c1alm3dia"}, r)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"contributors_enabled":false,"created_at":"Thu Aug 23 19:45:07 +0000 2012","default_profile":false,"default_profile_image":false,"description":"Keep calm and rock on.","favourites_count":0,"follow_request_sent":false,"followers_count":0,"following":false,"friends_count":10,"geo_enabled":true,"id":776627022,"id_str":"776627022","is_translator":false,"lang":"en","listed_count":0,"location":"San Francisco, CA","name":"Sean Cook","notifications":false,"profile_background_color":"9AE4E8","profile_background_image_url":"http://a0.twimg.com/images/themes/theme16/bg.gif","profile_background_image_url_https":"https://si0.twimg.com/images/themes/theme16/bg.gif","profile_background_tile":false,"profile_image_url":"http://a0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg","profile_image_url_https":"https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg","profile_link_color":"0084B4","profile_sidebar_border_color":"BDDCAD","profile_sidebar_fill_color":"DDFFCC","profile_text_color":"333333","profile_use_background_image":true,"protected":false,"screen_name":"s0c1alm3dia","show_all_inline_media":false,"statuses_count":0,"time_zone":"Pacific Time (US & Canada)","url":"http://cnn.com","utc_offset":-28800,"verified":false}`)
+	})
+
+	client := NewClient(httpClient)
+
+	params := &BlockServiceCreateParams{
+		ScreenName: "s0c1alm3dia",
+	}
+	result, _, err := client.Block.Destroy(params)
+	expected := &User{
+		CreatedAt:       "Thu Aug 23 19:45:07 +0000 2012",
+		Description:     "Keep calm and rock on.",
+		FavouritesCount: 0,
+		FollowersCount:  0,
+		FriendsCount:    10,
+		GeoEnabled:      true,
+		ID:              776627022,
+		IDStr:           "776627022",
+		Lang:            "en",
+		ListedCount:     0,
+		Location:        "San Francisco, CA",
+		Name:            "Sean Cook",
+		ProfileBackgroundColor:         "9AE4E8",
+		ProfileBackgroundImageURL:      "http://a0.twimg.com/images/themes/theme16/bg.gif",
+		ProfileBackgroundImageURLHttps: "https://si0.twimg.com/images/themes/theme16/bg.gif",
+		ProfileImageURL:                "http://a0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+		ProfileImageURLHttps:           "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+		ProfileLinkColor:               "0084B4",
+		ProfileSidebarBorderColor:      "BDDCAD",
+		ProfileSidebarFillColor:        "DDFFCC",
+		ProfileTextColor:               "333333",
+		ScreenName:                     "s0c1alm3dia",
+		StatusesCount:                  0,
+		Timezone:                       "Pacific Time (US & Canada)",
+		URL:                            "http://cnn.com",
+		UtcOffset:                      -28800,
+		ProfileUseBackgroundImage:      true,
+		ContributorsEnabled:            false,
+		DefaultProfile:                 false,
+		DefaultProfileImage:            false,
+		FollowRequestSent:              false,
+		Following:                      false,
+		IsTranslator:                   false,
+		Notifications:                  false,
+		ProfileBackgroundTile:          false,
+		Protected:                      false,
+		ShowAllInlineMedia:             false,
+		Verified:                       false,
+	}
+	assert.Nil(t, err)
+	assert.Equal(t, expected, result)
+}

@@ -85,3 +85,14 @@ func (s *BlockService) Create(params *BlockServiceCreateParams) (*User, *http.Re
 	resp, err := s.sling.New().Post("create.json").QueryStruct(params).Receive(result, apiError)
 	return result, resp, relevantError(err, *apiError)
 }
+
+// Destroy un-blocks the user specified in the ID parameter for the
+// authenticating user. Returns the un-blocked user in the requested
+// format when successful.
+// https://dev.twitter.com/rest/reference/post/blocks/destroy
+func (s *BlockService) Destroy(params *BlockServiceCreateParams) (*User, *http.Response, error) {
+	result := new(User)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Post("destroy.json").QueryStruct(params).Receive(result, apiError)
+	return result, resp, relevantError(err, *apiError)
+}
