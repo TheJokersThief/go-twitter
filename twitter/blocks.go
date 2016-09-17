@@ -42,3 +42,27 @@ func (s *BlockService) List(params *BlockServiceListParams) (*BlockServiceListRe
 	resp, err := s.sling.New().Get("list.json").QueryStruct(params).Receive(result, apiError)
 	return result, resp, relevantError(err, *apiError)
 }
+
+// BlockServiceIDsParams are the params for BlockService.IDs
+type BlockServiceIDsParams struct {
+	StringifyIDs bool  `url:"stringify_ids,omitempty"`
+	Cursor       int64 `url:"cursor,omitempty"`
+}
+
+// BlockServiceIDsResult is the result for BlockService.IDs
+type BlockServiceIDsResult struct {
+	IDs               []int64 `json:"ids"`
+	PreviousCursor    int64   `json:"previous_cursor"`
+	PreviousCursorStr string  `json:"previous_cursor_str"`
+	NextCursor        int64   `json:"next_cursor"`
+	NextCursorStr     string  `json:"next_cursor_str"`
+}
+
+// IDs returns an array of numeric user ids the authenticating user is blocking.
+// https://dev.twitter.com/rest/reference/get/blocks/ids
+func (s *BlockService) IDs(params *BlockServiceIDsParams) (*BlockServiceIDsResult, *http.Response, error) {
+	result := new(BlockServiceIDsResult)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Get("ids.json").QueryStruct(params).Receive(result, apiError)
+	return result, resp, relevantError(err, *apiError)
+}

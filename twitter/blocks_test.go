@@ -77,3 +77,31 @@ func TestBlockService_List(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, expected, result)
 }
+
+func TestBlockService_IDs(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/1.1/blocks/ids.json", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "GET", r)
+		assertQuery(t, map[string]string{"cursor": "-1"}, r)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"next_cursor":0,"next_cursor_str":"0","previous_cursor":0,"previous_cursor_str":"0","ids":[123, 124, 125]}`)
+	})
+
+	client := NewClient(httpClient)
+
+	params := &BlockServiceIDsParams{
+		Cursor: -1,
+	}
+	result, _, err := client.Block.IDs(params)
+	expected := &BlockServiceIDsResult{
+		PreviousCursor:    0,
+		PreviousCursorStr: "0",
+		NextCursor:        0,
+		NextCursorStr:     "0",
+		IDs:               []int64{123, 124, 125},
+	}
+	assert.Nil(t, err)
+	assert.Equal(t, expected, result)
+}
