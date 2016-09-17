@@ -66,3 +66,22 @@ func (s *BlockService) IDs(params *BlockServiceIDsParams) (*BlockServiceIDsResul
 	resp, err := s.sling.New().Get("ids.json").QueryStruct(params).Receive(result, apiError)
 	return result, resp, relevantError(err, *apiError)
 }
+
+// BlockServiceCreateParams are the params for BlockService.Create
+type BlockServiceCreateParams struct {
+	UserID          int64  `url:"user_id,omitempty"`
+	ScreenName      string `url:"screen_name,omitempty"`
+	IncludeEntities bool   `url:"block_entities,omitempty"`
+	SkipStatus      bool   `url:"skip_status,omitempty"`
+}
+
+// Create blocks the specified user from following the authenticating user.
+// In addition the blocked user will not show in the authenticating users
+// mentions or timeline (unless retweeted by another user).
+// https://dev.twitter.com/rest/reference/post/blocks/create
+func (s *BlockService) Create(params *BlockServiceCreateParams) (*User, *http.Response, error) {
+	result := new(User)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Post("create.json").QueryStruct(params).Receive(result, apiError)
+	return result, resp, relevantError(err, *apiError)
+}
